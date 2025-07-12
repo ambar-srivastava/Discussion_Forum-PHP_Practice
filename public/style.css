@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: #093041 !important;
+  font-weight: 600 !important;
+  font-size: 1.2rem !important;
+}
+
+.signup-heading {
+  text-align: center;
+}
