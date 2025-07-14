@@ -1,14 +1,14 @@
 <?php
-    $host = "localhost";
-    $username = "root";
-    $password = null;
-    $database = "discuss";
+$host = "localhost";
+$username = "root";
+$password = ""; // null can be used too, but "" is preferred for no password
+$database = "discuss";
 
-    $connection = new mysqli($host, $username, $password, $database);
+// Create connection
+$conn = new mysqli($host, $username, $password, $database);
 
-    if($connection->connect_error){
-        die("not connected with DB ". $connection->connect_error);
-    }
-
-    echo "db connected ";
+// Check connection
+if ($conn->connect_error) {
+    die("❌ Database connection failed: " . $conn->connect_error);
+}
 ?>

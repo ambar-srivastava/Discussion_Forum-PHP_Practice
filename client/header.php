@@ -17,12 +17,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Category</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?login=true">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?signup=true">Signup</a>
-                </li>
+                <?php
+                if ($username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username'] : null) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./server/requests.php?logout=true">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?ask=true">Ask a Question</a>
+                    </li>
+                <?php } ?>
+
+                <?php
+                if (!$username = isset($_SESSION['user']['username']) ? $_SESSION['user']['username'] : null) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?login=true">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?signup=true">Signup</a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>

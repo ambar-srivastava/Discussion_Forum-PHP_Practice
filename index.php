@@ -10,12 +10,18 @@
 
 <body>
     <?php
+    session_start();
     include('./client/header.php');
 
-    if (isset($_GET['signup'])) {
+    // if (isset($_GET['signup']) && !$_SESSION['user']['username']) {
+    if (isset($_GET['signup']) && (!isset($_SESSION['user']) || !isset($_SESSION['user']['username']))) {
         include('./client/signup.php');
-    } else if (isset($_GET["login"])) {
+    }
+    // else if (isset($_GET["login"]) && !$_SESSION['user']['username']) {
+    else if (isset($_GET["login"]) && (!isset($_SESSION['user']) || !isset($_SESSION['user']['username']))) {
         include('./client/login.php');
+    } else if (isset($_GET['ask'])) {
+        include('./client/ask.php');
     } else {
         //
     }

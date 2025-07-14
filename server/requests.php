@@ -1,8 +1,83 @@
 <?php
+
+session_start();
+
 include("../common/db.php");
-if (isset($_POST["signup"])) {
-    echo "user email is " . $_POST["username"] . "<br/>";
-    echo "user email is " . $_POST["email"] . "<br/>";
-    echo "user password is " . $_POST["password"] . "<br/>";
-    echo "user address is " . $_POST["address"] . "<br/>";
+
+$createTableSQL = "CREATE TABLE IF NOT EXISTS `users` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `address` TEXT
+)";
+if ($conn->query($createTableSQL) === FALSE) {
+    die("❌ Failed to create table: " . $conn->error);
 }
+
+if (isset($_POST['signup'])) {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $address = $_POST['address'];
+
+    $user = $conn->prepare("INSERT INTO `users`(`id`, `username`, `email`, `password`, `address`) 
+    VALUES (NULL, ?, ?, ?, ?)");
+
+    $user->bind_param("ssss", $username, $email, $password, $address);
+
+    $result = $user->execute();
+
+    if ($result) {
+        $_SESSION["user"] = ["username" => $username, "email" => $email, "user_id" => $user->insert_id];
+        header("location: /discussion");
+    } else {
+        echo "❌ New user not registered";
+    }
+} else if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $username = "";
+    $user_id = 0;
+    $query = "select * from users where email = '$email' and password = '$password'";
+    $result = $conn->query($query);
+    if ($result->num_rows == 1) {
+        foreach ($result as $row) {
+            $username = $row['username'];
+            $user_id = $row['id'];
+        }
+        $_SESSION["user"] = ["username" => $username, "email" => $email, "user_id" => $user_id];
+        header("location: /discussion");
+    } else {
+        echo "❌ New user not registered";
+    }
+} else if (isset($_GET["logout"])) {
+    session_unset();
+    header("location: /discussion");
+} else if (isset($_POST["ask"])) {
+    $title = $_POST['title'] ?? "";
+    $description = $_POST['description'] ?? "";
+    $category_id = $_POST['category_id'] ?? "";
+    $user_id = $_SESSION['user']['user_id'] ?? null;
+
+    if (empty($title) || empty($description) || empty($category_id) || !$user_id) {
+        echo "❌ All fields are required!";
+        exit;
+    }
+
+    $askQues = $conn->prepare("INSERT INTO `questions` (`id`, `title`, `description`, `category_id`, `user_id`) 
+    VALUES (NULL, ?, ?, ?, ?)");
+
+    $askQues->bind_param("ssii", $title, $description, $category_id, $user_id);
+
+    $result = $askQues->execute();
+
+    if ($result) {
+        header("location: /discussion");
+        exit;
+    } else {
+        echo "❌ Question not added: " . $askQues->error;
+    }
+}
+
+?>

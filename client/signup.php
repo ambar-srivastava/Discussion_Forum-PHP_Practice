@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container py-5">
     <h1 class="signup-heading">Signup</h1>
     <form method="post" action="./server/requests.php">
         <div class="col-6 offset-sm-3 my-4">
@@ -17,6 +17,6 @@
             <label for="address" class="form-label">Enter Your Address</label>
             <input type="text" class="form-control" id="address" placeholder="Address" name="address">
         </div>
-        <button type="submit" name="signup" class="btn btn-primary">Signup</button>
+        <button type="submit" name="signup" class="btn btn-primary col-6 offset-sm-3 my-2">Signup</button>
     </form>
 </div>
