@@ -1,4 +1,4 @@
- <select name="category_id" id="category" class="form-select text-capitalize">
+ <select name="category" id="category" class="form-select text-capitalize">
      <option value="">Select a Category</option>
      <?php
         include("./common/db.php");

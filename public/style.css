@@ -14,8 +14,35 @@ a {
   color: #093041 !important;
   font-weight: 600 !important;
   font-size: 1.2rem !important;
+  text-decoration: none;
 }
 
 .signup-heading {
   text-align: center;
+  color: #e8862d;
+}
+
+.question-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px 20px !important;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.question-box:hover {
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.question-box h4 {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #093041;
+}
+
+.question-box p {
+    color: #555;
 }
