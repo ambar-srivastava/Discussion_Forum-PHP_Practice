@@ -40,4 +40,3 @@ if ($conn->query($sqlInsert)) {
 }
 
 $conn->close();
-?>

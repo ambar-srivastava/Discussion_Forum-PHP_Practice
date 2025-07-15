@@ -2,7 +2,7 @@
     <h1 class="signup-heading my-5">Categories</h1>
     <?php
     include('./common/db.php');
-    $query = "SELECT * from category";
+    $query = "SELECT * FROM category";
     $result = $conn->query($query);
     foreach ($result as $row) {
         $id = $row["id"];
