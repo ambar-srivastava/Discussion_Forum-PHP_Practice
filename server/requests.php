@@ -78,6 +78,29 @@ if (isset($_POST['signup'])) {
     } else {
         echo "❌ Question not added: " . $askQues->error;
     }
+} else if (isset($_POST["answer"])) {
+    $answer = $_POST['answer'] ?? "";
+    $question_id = isset($_POST['question_id']) ? (int) $_POST['question_id'] : null;
+    $user_id = $_SESSION['user']['user_id'] ?? null;
+
+    if (empty($answer) || empty($question_id) || !$user_id) {
+        echo "❌ All fields are required!";
+        exit;
+    }
+
+    $newAns = $conn->prepare("INSERT INTO `answers` (`id`, `answer`, `question_id`, `user_id`) 
+    VALUES (NULL, ?, ?, ?)");
+
+    $newAns->bind_param("sii", $answer, $question_id, $user_id);
+
+    $result = $newAns->execute();
+
+    if ($result) {
+        header("location: /discussion?q-id=$question_id");
+        exit;
+    } else {
+        echo "❌ Answer not added: " . $newAns->error;
+    }
 }
 
 ?>
